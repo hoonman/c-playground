@@ -1,0 +1,53 @@
+Write basic C code by hand
+
+Read and understand C code
+
+stdio library
+
+Main functions
+
+Basic operation of print and scan functions
+
+"strings" in C
+
+Manipulation
+
+Types of declarations - mutable vs non-mutable
+
+Pointers
+
+Dereferencing
+
+Address of
+
+Pointer Arithmetic
+
+Pass by Reference vs Pass by Value
+
+Structs & Unions
+
+Memory allocation of structs and alignment
+
+Size of struct
+
+Struct Declaration
+
+typedef
+
+C Preprocessor
+
+#ifndef, #define, etc
+
+Typical Bugs
+
+out of bounds access
+
+memory leaks
+
+dangling pointers
+
+incorrect types
+
+Compiler flags - What do they do?
+
+Compilation and Linking process - From source to program
