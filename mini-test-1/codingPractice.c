@@ -6,6 +6,7 @@
 // // sum of all elements array[begin_index] to array[end_index]
 // int rangeSum(int array[], int begin_index, int end_index, int size)    
 #include <stdio.h>
+#include <ctype.h>
 int rangeSum(int array[], int begin_index, int end_index, int size) {
     // initialize a pointer int* mover that will move thorugh the array one by one. we will also have an index variable that counts what index we are at
     int totalSum = 0;
@@ -184,8 +185,33 @@ int strCompare(char* s, char* t) {
 
 // Write a function, using only pointers, to find the length of a string, where the end of the string is defined as either '\0' or any character in the delimiter string (which is null-terminated). 
 // int strlenD(char* string, char* delimiter);
+int strLenD(char* string, char* delimiter) {
+    int length = 0;
+    char* mover = string;
+    while (*mover != '\n' && !isspace(*mover)) {
+        mover++;
+        length++;
+    }
+    return length;
+}
+
 // Write a string compare function that returns 1 if the strings match for n characters starting at offset m, 0 if the strings don't match. You must check if m is within the length of both s and t.
 // int submatch(char* s, char* t, int n, int m)
+int submatch(char* s, char* t, int n, int m) {
+    // 1 if the strings match for n characters starting at offset m 
+    // 0 if the strings don't match.
+    // check if m is within the length of s and t
+
+    // since this seems like a one pass check, we don't need a mover, no need for double loop
+    // we do need to make sure that we don't overflow for one string.
+    // assume offset applies for both strings ?
+
+    // check length
+    int sLength = 0;
+    int tLength = 0;
+
+    
+}
 
 // Write a function that substitutes all the occurrences of the from character with the to character in str using pointers only.
 // char *substitute(char *str, char from, char to);
