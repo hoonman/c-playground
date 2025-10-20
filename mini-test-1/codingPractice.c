@@ -127,6 +127,7 @@ int countSubString(char* s, char* substring) {
     return totalCount;
 }
 
+//
 // Ex: countSubString("aaaaaabaaccacd", "aa") returns 4
 
 // Write a function to count all occurrences of each of the characters in the symbol string within string s using only pointers.
