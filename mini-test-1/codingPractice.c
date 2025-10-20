@@ -209,8 +209,38 @@ int submatch(char* s, char* t, int n, int m) {
     // check length
     int sLength = 0;
     int tLength = 0;
+    char* sMover = s;
+    char* tMover = t;
 
-    
+    while (*s != '\0') {
+        if (sLength < m) {
+            sMover++;
+        }
+        sLength++;
+    }
+    while (*t != '\0') {
+        if (tLength < m) {
+            tMover++;
+        }
+        tLength++;
+    }
+
+    // length doens't matter. match vs datc 
+    // check if legnth s has enough characters after m
+    if (sLength < (m + n) || tLength < (m + n)) {
+        return 0;
+    }
+
+    int counter = 0;
+    while ((sMover != '\0' || tMover != '\0') && (*sMover == *tMover)) {
+        if (counter == n) {
+            return 1;
+        }
+        sMover++;
+        tMover++;
+        counter++;
+    }
+    return 0;
 }
 
 // Write a function that substitutes all the occurrences of the from character with the to character in str using pointers only.
