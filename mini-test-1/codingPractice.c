@@ -217,12 +217,14 @@ int submatch(char* s, char* t, int n, int m) {
             sMover++;
         }
         sLength++;
+        s++;
     }
     while (*t != '\0') {
         if (tLength < m) {
             tMover++;
         }
         tLength++;
+        t++;
     }
 
     // length doens't matter. match vs datc 
@@ -245,96 +247,246 @@ int submatch(char* s, char* t, int n, int m) {
 
 // Write a function that substitutes all the occurrences of the from character with the to character in str using pointers only.
 // char *substitute(char *str, char from, char to);
+char *substitute(char* str, char from, char to) {
+    // all occurrences of the from character with to character in str using pointers
+    // iterate through the list, find the match for from.
+    // if they are same length we can replace
+    // if they are not, then what do we do? 
+    char* mover = str;
+    while (*mover != '\0') {
+        if (*mover == from) {
+            *mover = to;
+        }
+        mover++;
+    }
+    return str;
+}
 
-// struct person {
-//   char netid[15];
-//   float gpa;
-//   char* major;
-//   int age;
-// } class[50]; 
+struct person {
+  char netid[15];
+  float gpa;
+  char* major;
+  int age;
+} class[50]; 
 
 // //Assume class[50] is fully initialized.
-// struct person *p = &class[0];
+struct person *p = &class[0];
 
 // Write a function that counts all the people in the class with the specified major m, using only pointers and your strcompare function
 // int countMajor(struct person *p, char *m, int sizeofClass)
+int countMajor(struct person* p, char *m, int sizeofClass) {
+    // class is a list 
+    int result = 0;
+    for (struct person* pMover = p; pMover < (p + sizeofClass); pMover++) {
+        if (strCompare(pMover->major, m) == 1) {
+            result += 1;
+        }
+    }
+    return result;
+}
 
 
-// struct person {
-//   char netid[15];
-//   float gpa;
-//   char* major;
-//   int age;
-// } class[50]; 
+struct person {
+  char netid[15];
+  float gpa;
+  char* major;
+  int age;
+} class[50]; 
 
 // //Assume class[50] is fully initialized.
-// struct person *p = &class[0];
+struct person *p = &class[0];
 
 // Write a function that counts all the people in the class with the netid starting with prefix using only pointers and your submatch function
 // int countMajor(struct person *p, char *prefix, int sizeofClass)
+int countMajor(struct person *p, char* prefix, int sizeofClass) {
+    
+}
 
-// struct person {
-//   char netid[15];
-//   float gpa;
-//   char* major;
-//   int age;
-// } class[50]; 
+struct person {
+  char netid[15];
+  float gpa;
+  char* major;
+  int age;
+} class[50]; 
 
-// //Assume class[50] is fully initialized.
-// struct person *p = &class[0];
+//Assume class[50] is fully initialized.
+struct person *p = &class[0];
 
 // Write a function that counts all the people in the class with a gpa greater than g, using only pointers 
-// int countGPA(struct person *p, float g, int sizeofClass)
+int countGPA(struct person *p, float g, int sizeofClass) {
+    int result = 0;
+    for (struct person* pMover; pMover < (p + sizeofClass); pMover++) {
+        if (pMover->gpa > g) {
+            result++;
+        }
+    }
+    return result;
+}
 
-// typedef struct node{
-//      char c;
-//      struct node* next;
-// } Node;
+typedef struct node{
+     char c;
+     struct node* next;
+} Node;
 
 // Assume Node* Listhead points at a singly linked list of initialized nodes.  
 
 // Write a function to count the number of entries in the list that contain the same c character as Node t, using pointers only
-// int countMatchList(Node * Listhead, Node t)
+int countMatchList(Node * Listhead, Node t) {
+    // same c character as nde t
+    int result = 0;
+    while (*Listhead != NULL) {
+        if (t.c == Listhead->c) {
+            result++;
+        }
+        Listhead = Listhead->next;
+    }
+    return result;
+}
 
-// typedef struct node{
-//      char c;
-//      struct node* next;
-//      struct node* prev;
-// } Node;
+
+typedef struct node{
+     char c;
+     struct node* next;
+     struct node* prev;
+} Node;
 
 // Assume Node* Listhead points at a linked list of initialized nodes.  
 
 // Write a function to determine if the elements in the list form a palindrome, using pointers only. Return 1 if yes, 0 if no
-// int palendromeList(Node * Listhead)
+int palendromeList(Node * Listhead) {
+    // initialize another pointer and move it to the end of the list
+    Node* start = Listhead;
+    Node* end = Listhead;
+
+    while(end) {
+        end = end->next;
+    }
+    end = end->prev;
+
+    // now that end is at the end we can compare
+    while (start != end || start->next != end || end->prev != start) {
+        // there can be a case where start and end never converge like 4 sized linked lists. should we do this by length? OR if start->next = end or end->prev is start
+        if (start->c != end->c) {
+            return 0;
+        }
+        start = start->next;
+        end = end->prev;
+    }
+    return 1;
+}
 
 // Ex: [x,a,m,a,x] or [a,b,b,a]
 
-// typedef struct node{
-//      char* string;
-//      struct node* next;
-// } Node;
+typedef struct node{
+     char* string;
+     struct node* next;
+} Node;
 
 // Assume Node* Listhead points at a linked list of initialized nodes.  
 
 // Write a function to print out strings in the list which have length equal to len, using only pointers and your strlen
 
-// void printStringByLen(Node * Listhead, int len)
+void printStringByLen(Node * Listhead, int len) {
+    while (Listhead) {
+        if (strlenD(Listhead->string) == len) {
+            printf("%s: \n", Listhead->string);
+        }
+        Listhead = Listhead->next;
+    }
+}
 
 // Given a function with the following definition:
-// void printThreeWords(char* sentence){
-// 	char* firstWord = NULL, *secondWord = NULL, *lastWord = NULL;
-// 	//your code here
-// 	print(“%s,%s,%s\n”, firstWord, secondWord, lastWord);
-// };
+void printThreeWords(char* sentence) {
+	char* firstWord = NULL, *secondWord = NULL, *lastWord = NULL;
+	//your code here
+    // sentence must be like: I LOVE YOU! (as a single sentence that was malloc'd so we must free this after using)
+    // since we don't know the lengths of these words, we must determine them. and malloc firstWord = (char*)malloc(lengthOfFirstWord * sizeof(char)) within the function loop? 
+    int firstWordLength = 0;
+    int secondWordLength = 0;
+    int thirdWordLength = 0;
 
+    char* sentenceMover = sentence;
+    // move the pointer until the first space. 
+    while (*sentenceMover != ' ') {
+        firstWordLength++;
+        sentenceMover++;
+    }
+
+    // malloc the firstWord
+    firstWord = (char*) malloc((firstWordLength + 1) * sizeof(char));
+    for (int i = 0; i < firstWordLength; i++) {
+        *(firstWord + i) = *(sentence + i);
+    }
+    *(firstWord + firstWordLength) = '\0';
+
+    sentenceMover++;
+    while (*sentenceMover != ' ') {
+        secondWordLength++;
+        sentenceMover++;
+    }
+
+    secondWord = (char*) malloc((secondWordLength + 1) * sizeof(char));
+    for (int i = 0; i < secondWordLength; i++) {
+        *(secondWord + i) = *(sentence + firstWordLength + 1 + i); //we must start at the second word
+    }
+    *(secondWord + secondWordLength) = '\0';
+
+    sentenceMover++;
+    while (*sentenceMover != ' ') {
+        thirdWordLength++;
+        sentenceMover++;
+    }
+
+    lastWord = (char*) malloc((thirdWordLength + 1) * sizeof(char));
+    for (int i = 0; i < thirdWordLength; i++) {
+        *(lastWord + i) = *(sentence + firstWordLength + secondWordLength + 1+ 1 + i);
+    }
+    *(lastWord + thirdWordLength) = '\0';
+
+	printf(“%s,%s,%s\n”, firstWord, secondWord, lastWord);
+    free(sentence);
+    sentence = NULL; //dangling pointer
+
+    free(firstWord);
+    firstWord = NULL;
+
+    free(secondWord);
+    secondWord = NULL;
+
+    free(lastWord);
+    lastWord = NULL;
+}
 // Assume that sentence is a c string that was allocated using malloc in the calling function. Assume all words are separated by a single ' ' (space) character. 
 
 // Write an implementation of printThreeWords that prints out each word separately using only the pointers given to you. Do not allocate more space.
 
+void printThreeWords(char* sentence) {
+    char* firstWord = sentence; 
+    char* secondWord = NULL;
+    char* thirdWord = NULL;
+
+    // put the pointers in the beginning of each sentence and put a null terminator in the spaces
+    char* mover = sentence;
+    while (*mover != ' ') {
+        mover++;
+    }
+    secondWord = mover + 1;
+    *mover = '\0';
+
+    mover = secondWord;
+    while (*mover != ' ') {
+        mover++;
+    }
+    thirdWord = mover + 1;
+    *mover = '\0';
+
+    printf("%s, %s, %s\n", firstWord, secondWord, thirdWord);
+}
+
 // EX:
-// char* sentence = malloc(sizeof(char) * 24);
+char* sentence = malloc(sizeof(char) * 24);
 // // code to place the sentence “Computer Science Rules!” into sentence
-// printThreeWords(sentence); // prints "Computer,Science,Rules!"
+printThreeWords(sentence); // prints "Computer,Science,Rules!"
 
 
 int main() {
@@ -421,48 +573,93 @@ int main() {
     reverseStr(str7);
     printf("Test 7 (after): \"%s\" -> Expected: \"\"\n", str7);
     
-    // Test cases for countSubString function
-    printf("\n--- Testing countSubString function ---\n");
+    // // Test cases for countSubString function
+    // printf("\n--- Testing countSubString function ---\n");
 
-    // Test case 1: Basic example from requirement
-    printf("Test 1: Count \"aa\" in \"aaaaaabaaccacd\" -> Expected: 4, Got: %d\n",
-        countSubString("aaaaaabaaccacd", "aa"));
+    // // Test case 1: Basic example from requirement
+    // printf("Test 1: Count \"aa\" in \"aaaaaabaaccacd\" -> Expected: 4, Got: %d\n",
+    //     countSubString("aaaaaabaaccacd", "aa"));
 
-    // Test case 2: No matches
-    printf("Test 2: Count \"xyz\" in \"abcdef\" -> Expected: 0, Got: %d\n",
-        countSubString("abcdef", "xyz"));
+    // // Test case 2: No matches
+    // printf("Test 2: Count \"xyz\" in \"abcdef\" -> Expected: 0, Got: %d\n",
+    //     countSubString("abcdef", "xyz"));
 
-    // Test case 3: Multiple non-overlapping matches
-    printf("Test 3: Count \"ab\" in \"ababab\" -> Expected: 3, Got: %d\n",
-        countSubString("ababab", "ab"));
+    // // Test case 3: Multiple non-overlapping matches
+    // printf("Test 3: Count \"ab\" in \"ababab\" -> Expected: 3, Got: %d\n",
+    //     countSubString("ababab", "ab"));
 
-    // Test case 4: Partial matches
-    printf("Test 4: Count \"abc\" in \"abxabcabc\" -> Expected: 2, Got: %d\n",
-        countSubString("abxabcabc", "abc"));
+    // // Test case 4: Partial matches
+    // printf("Test 4: Count \"abc\" in \"abxabcabc\" -> Expected: 2, Got: %d\n",
+    //     countSubString("abxabcabc", "abc"));
 
-    // Test case 5: Potential overlaps (non-overlapping rule)
-    printf("Test 5: Count \"aa\" in \"aaa\" -> Expected: 1, Got: %d\n",
-        countSubString("aaa", "aa"));
+    // // Test case 5: Potential overlaps (non-overlapping rule)
+    // printf("Test 5: Count \"aa\" in \"aaa\" -> Expected: 1, Got: %d\n",
+    //     countSubString("aaa", "aa"));
 
-    // Test case 6: Empty main string
-    printf("Test 6: Count \"abc\" in \"\" -> Expected: 0, Got: %d\n",
-        countSubString("", "abc"));
+    // // Test case 6: Empty main string
+    // printf("Test 6: Count \"abc\" in \"\" -> Expected: 0, Got: %d\n",
+    //     countSubString("", "abc"));
 
-    // Test case 7: Empty substring (edge case)
-    printf("Test 7: Count \"\" in \"abcdef\" -> Expected: 0, Got: %d\n",
-        countSubString("abcdef", ""));
+    // // Test case 7: Empty substring (edge case)
+    // printf("Test 7: Count \"\" in \"abcdef\" -> Expected: 0, Got: %d\n",
+    //     countSubString("abcdef", ""));
 
-    // Test case 8: Single character matches
-    printf("Test 8: Count \"a\" in \"banana\" -> Expected: 3, Got: %d\n",
-        countSubString("banana", "a"));
+    // // Test case 8: Single character matches
+    // printf("Test 8: Count \"a\" in \"banana\" -> Expected: 3, Got: %d\n",
+    //     countSubString("banana", "a"));
 
-    // Test case 9: Longer substring
-    printf("Test 9: Count \"hello\" in \"hello world hello\" -> Expected: 2, Got: %d\n",
-        countSubString("hello world hello", "hello"));
+    // // Test case 9: Longer substring
+    // printf("Test 9: Count \"hello\" in \"hello world hello\" -> Expected: 2, Got: %d\n",
+    //     countSubString("hello world hello", "hello"));
 
-    // Test case 10: Match at beginning and end
-    printf("Test 10: Count \"end\" in \"endgameend\" -> Expected: 2, Got: %d\n",
-        countSubString("endgameend", "end"));
+    // // Test case 10: Match at beginning and end
+    // printf("Test 10: Count \"end\" in \"endgameend\" -> Expected: 2, Got: %d\n",
+    //     countSubString("endgameend", "end"));
+
+    // Test cases for submatch function
+    printf("\n--- Testing submatch function ---\n");
+
+    // Basic matches
+    printf("Test 1: \"hello\" and \"hello\" match 3 chars at offset 0 -> Expected: 1, Got: %d\n",
+        submatch("hello", "hello", 3, 0));
+
+    printf("Test 2: \"hello\" and \"hello\" match 5 chars at offset 0 -> Expected: 1, Got: %d\n",
+        submatch("hello", "hello", 5, 0));
+
+    // Middle matches in different strings
+    printf("Test 3: \"testing\" and \"contest\" match 4 chars at offset 2 -> Expected: 1, Got: %d\n",
+        submatch("testing", "contest", 4, 2));
+
+    printf("Test 4: \"abcdefg\" and \"xyzdefg\" match 3 chars at offset 3 -> Expected: 1, Got: %d\n",
+        submatch("abcdefg", "xyzdefg", 3, 3));
+
+    // Offset out of bounds
+    printf("Test 5: \"hello\" and \"world\" with offset 10 -> Expected: 0, Got: %d\n",
+        submatch("hello", "world", 1, 10));
+
+    printf("Test 6: \"hello\" and \"world\" with offset 5 -> Expected: 0, Got: %d\n",
+        submatch("hello", "world", 1, 5));
+
+    // Different strings, no match
+    printf("Test 7: \"apple\" and \"orange\" match 3 chars at offset 1 -> Expected: 0, Got: %d\n",
+        submatch("apple", "orange", 3, 1));
+
+    // Edge cases
+    printf("Test 8: \"\" and \"\" match 0 chars at offset 0 -> Expected: 1, Got: %d\n",
+        submatch("", "", 0, 0));
+
+    printf("Test 9: \"test\" and \"test\" match 0 chars at offset 2 -> Expected: 1, Got: %d\n",
+        submatch("test", "test", 0, 2));
+
+    printf("Test 10: \"test\" and \"test\" with n > string length -> Expected: 0, Got: %d\n",
+        submatch("test", "test", 10, 0));
+
+    // Different length strings
+    printf("Test 11: \"longstring\" and \"short\" match 3 chars at offset 2 -> Expected: 0, Got: %d\n",
+        submatch("longstring", "short", 3, 2));
+
+    printf("Test 12: \"abc\" and \"abcdef\" match 3 chars at offset 0 -> Expected: 1, Got: %d\n",
+        submatch("abc", "abcdef", 3, 0));
 
     return 0;
 
